@@ -1,0 +1,68 @@
+{% extends "base_front.html.twig" %}
+
+{% block body %}
+
+
+    <header class="masthead">
+        <div class="container">
+            <div class="masthead-subheading">{{ category.name }}</div>
+        </div>
+    </header>
+    <!-- Portfolio Grid-->
+    <section class="page-section bg-light" id="portfolio">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-2">
+                    <h5>Categorias</h5>
+                    <ul class="nav">
+                        {% for category in categories %}
+                            <li class="nav-item">
+                                <a class="{{ category.slug in app.request.uri ? 'active': ''  }}" href="{{ path("category_home", {'categorySlug': category.slug}) }}">{{ category.name }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% for product in products %}
+                    <div class="col-lg-3 col-sm-4 mb-4">
+                        <!-- Portfolio item 1-->
+                        <div class="portfolio-item">
+                            <a class="portfolio-link" href="{{ path('product', {'slug': product.slug}) }}">
+                                <div class="portfolio-hover">
+                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                                </div>
+                                <img class="img-fluid" src="/uploads/products/{{ product.mainImageFilename }}" style="min-height: 300px;">
+                            </a>
+                            <div class="portfolio-caption">
+                                <div class="portfolio-caption-heading">{{ product.name }}</div>
+                                <p class="">$ {{ product.price }} / {{ product.typeForFront }}</p>
+                                {% if product.divisible %}
+                                    <div>
+                                        <p>Seleccione cantidad</p>
+                                        {{ loadProductDivisible(product.divisibleBy, product.type, product.price, product.priceDivider, 0) }}
+                                    </div>
+                                {% else %}
+                                    <div>
+                                        <p>Cantidad</p>
+                                        <input type="number" name="quantity" value="1" min="1" id="productQuantity">
+                                    </div>
+                                {% endif %}
+                                {% if product.envases|length > 0 %}
+                                    <select class="form-select mt-2 jsEnvaseSelect">
+                                        <option>¿Necesitas envase?</option>
+                                        {% for envase in product.envases %}
+                                            <option data-envase="{{ envase.id }}" data-price="{{ envase.price }}">{{ envase.name }} - $ {{ envase.price }}</option>
+                                        {% endfor %}
+                                    </select>
+                                {% endif %}
+                                <button class="mt-4 mb-4 btn btn-outline-dark jsAddToCart" data-id="{{ product.id }}">Agregar al carrito</button>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Contact-->
+{% endblock %}

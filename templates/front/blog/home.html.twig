@@ -1,0 +1,46 @@
+{% extends "base_front.html.twig" %}
+
+{% block body %}
+
+<header class="masthead">
+    <div class="container">
+        <div class="masthead-subheading">Welcome To Our Studio!</div>
+    </div>
+</header>
+<section class="page-section" id="about">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-heading text-uppercase">Posts</h2>
+        </div>
+        <div class="row">
+            {% for post in posts %}
+                <div class="col-md-4">
+                    <div class="card mb-4 box-shadow" style="min-height: 384px;">
+                        <img
+                            class="card-img-top"
+                            data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail"
+                            alt="Thumbnail [100%x225]"
+                            src="/uploads/products/{{ post.image }}"
+                            data-holder-rendered="true"
+                            style="height: 225px;
+                            width: 100%;
+                             display: block;
+                        ">
+                        <div class="card-body">
+                            {{ post.shortDescription }}
+                            <div class="d-flex">
+                                <div class="btn-group">
+                                    <a href="{{ path('blog_post', {'slug' : post.slug}) }}">Ver</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+
+
+    </div>
+</section>
+{% endblock %}

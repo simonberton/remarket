@@ -1,5 +1,5 @@
 const Encore = require('@symfony/webpack-encore');
-
+const CopyPlugin = require('copy-webpack-plugin');
 // Manually configure the runtime environment if not already configured yet by the "encore" command.
 // It's useful when you use tools that rely on webpack.config.js file.
 if (!Encore.isRuntimeEnvironmentConfigured()) {
@@ -11,9 +11,34 @@ Encore
     .setOutputPath('public/build/')
     // public path used by the web server to access the output path
     .setPublicPath('/build')
+    .cleanupOutputBeforeBuild()
+    .enableSourceMaps(!Encore.isProduction())
     // only needed for CDN's or sub-directory deploy
     //.setManifestKeyPrefix('build/')
+    .addStyleEntry('admin_style', './assets/styles/admin.css')
+    .addStyleEntry('front_style', './assets/styles/styles.scss')
+    .addStyleEntry('login_style', './assets/styles/login.css')
+    .addStyleEntry('table_style', './assets/styles/table.css')
+    .addStyleEntry('checkout_style', './assets/styles/checkout.css')
 
+    .addPlugin(
+        new CopyPlugin({
+            patterns: [{
+                from: './node_modules/tinymce/skins',
+                to: 'skins',
+                noErrorOnMissing: true
+            }],
+        })
+    )
+    .addPlugin(
+        new CopyPlugin({
+            patterns: [{
+                from: './node_modules/tinymce/themes',
+                to: 'themes',
+                noErrorOnMissing: true
+            }],
+        })
+    )
     /*
      * ENTRY CONFIG
      *
@@ -21,6 +46,15 @@ Encore
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
     .addEntry('app', './assets/app.js')
+    .addEntry('admin', './assets/controllers/admin.js')
+    .addEntry('front', './assets/controllers/front.js')
+    .addEntry('login', './assets/controllers/login.js')
+    .addEntry('table-category', './assets/controllers/table-category.js')
+    .addEntry('table-product', './assets/controllers/table-product.js')
+    .addEntry('table-post', './assets/controllers/table-post.js')
+    .addEntry('table-order', './assets/controllers/table-order.js')
+    .addEntry('table-envase', './assets/controllers/table-envase.js')
+    .addEntry('checkout', './assets/controllers/checkout.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')
@@ -56,7 +90,7 @@ Encore
     })
 
     // enables Sass/SCSS support
-    //.enableSassLoader()
+    .enableSassLoader()
 
     // uncomment if you use TypeScript
     //.enableTypeScriptLoader()
@@ -69,7 +103,7 @@ Encore
     //.enableIntegrityHashes(Encore.isProduction())
 
     // uncomment if you're having problems with a jQuery plugin
-    //.autoProvidejQuery()
+    .autoProvidejQuery()
 ;
 
 module.exports = Encore.getWebpackConfig();

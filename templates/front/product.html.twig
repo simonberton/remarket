@@ -1,0 +1,50 @@
+{% extends "base_front.html.twig" %}
+
+{% block body %}
+
+
+    <header class="masthead">
+        <div class="container">
+        </div>
+    </header>
+    <!-- Portfolio Grid-->
+    <section class="page-section bg-light" id="portfolio">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <img src="/uploads/products/{{ product.mainImageFilename }}" style="max-height: 400px;
+    object-fit: cover;
+    width: 100%;">
+                </div>
+                <div class="col-lg-4">
+                    <h4>{{ product.name }}</h4>
+                    <p>{{ product.description }}</p>
+                    <p class="product-price">$ {{ product.price }} / {{ product.typeForFront }}</p>
+                    <span id="productDivider" data-divider="{{ product.priceDivider }}"></span>
+                    {% if product.divisible %}
+                        <div>
+                            <p>Seleccione cantidad</p>
+                            {{ loadProductDivisible(product.divisibleBy, product.type, product.price, product.priceDivider, 0) }}
+                        </div>
+                    {% else %}
+                    <div>
+                        <p>Cantidad</p>
+                        <input type="number" name="quantity" value="1" min="1" id="productQuantity">
+                    </div>
+                    {% endif %}
+                    {% if product.envases|length > 0 %}
+                        <p class="mt-3">¿Necesitas envase?</p>
+                        <select class="form-select jsEnvaseSelect">
+                            <option>Seleccione envase</option>
+                            {% for envase in product.envases %}
+                                <option data-envase="{{ envase.id }}" data-price="{{ envase.price }}">{{ envase.name }} - $ {{ envase.price }}</option>
+                            {% endfor %}
+                        </select>
+                    {% endif %}
+                    <button class="mt-4 mb-4 btn btn-outline-dark jsAddToCart" data-id="{{ product.id }}">Agregar al carrito</button>
+                    <p>Categoria: <a href="{{ path('category_home', {'categorySlug': product.category.slug}) }}">{{ product.category }}</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

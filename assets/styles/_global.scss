@@ -1,0 +1,106 @@
+// 
+// Global theme styling
+// 
+
+// Scroll padding for all scroll targets on page used with
+// native CSS smooth scrolling
+// 
+// https://caniuse.com/?search=scroll-padding
+
+html {
+    scroll-padding-top: 4.5rem;
+}
+
+body {
+    position: relative;
+    overflow-x: hidden;
+    font-family: Commissioner !important;
+}
+.page-section {
+    font-family: Commissioner !important;
+}
+// Adjust the line height of paragraphs
+
+p {
+    line-height: $line-height-lg;
+}
+ul {
+    padding: 0;
+    list-style: none;
+    margin: 0;
+    line-height: 28px;
+}
+a {
+    color: #333;
+    text-decoration: none;
+    transition: color .3s ease;
+}
+.bg-white-rounded {
+    border-radius: 0.25rem;
+    background-color: white;
+}
+.product-price {
+    font-size: 30px;
+    font-weight: 700;
+    line-height: normal;
+}
+// Spacing and heading styling for page sections
+
+.page-section {
+    padding: 6rem 0;
+
+    h2.section-heading {
+        font-size: 2.5rem;
+        margin-top: 0;
+        margin-bottom: 1rem;
+    }
+
+    h3.section-subheading {
+        font-size: 1rem;
+        font-weight: 400;
+        font-style: italic;
+        font-family: $subheadings-font-family;
+        margin-bottom: 4rem;
+    }
+}
+
+// Increase the padding on sections when screen size is greater
+// than the medium breakpoint (set by Bootstrap)
+
+@include media-breakpoint-up(md) {
+    section {
+        padding: 9rem 0;
+    }
+}
+
+.table-image {
+
+    thead {
+        td, th {
+            border: 0;
+            color: #666;
+            font-size: 0.8rem;
+        }
+    }
+
+    td, th {
+        vertical-align: middle;
+        text-align: center;
+
+        &.qty {
+            max-width: 2rem;
+        }
+    }
+}
+
+.price {
+    margin-left: 1rem;
+}
+
+.modal-footer {
+    padding-top: 0rem;
+}
+
+.active {
+    font-weight: 800;
+}

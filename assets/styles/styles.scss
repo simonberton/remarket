@@ -1,0 +1,45 @@
+//
+// Styles
+//
+
+// Import variables
+@import "./variables.scss";
+
+// Import Bootstrap
+@import '~bootstrap';
+@import 'bootstrap-table';
+
+// Global CSS
+@import "./global.scss";
+
+// Components
+@import "./components/buttons.scss";
+@import "./components/navbar.scss";
+
+// Sections
+@import "./sections/masthead.scss";
+@import "./sections/portfolio.scss";
+@import "./sections/timeline.scss";
+@import "./sections/team.scss";
+@import "./sections/contact.scss";
+@import "./sections/footer.scss";
+@import "toastr";
+
+* {
+  font-family: Commissioner !important;
+}
+@mixin width {
+  width: auto !important;
+}
+table {
+  &.table-fit {
+    @include width;
+    table-layout: auto !important;
+    thead th, tfoot th  {
+      @include width;
+    }
+    tbody td, tfoot td {
+      @include width;
+    }
+  }
+}

@@ -1,0 +1,79 @@
+{% extends "base_admin.html.twig" %}
+
+{% block content %}
+    <div class="container-fluid">
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">{{ action }} producto</h6>
+            </div>
+
+            <div class="card-body">
+                {{ form_start(form) }}
+                    <div class="form-group row">
+                        <div class="col-sm-6 mb-3 mb-sm-0">
+                            {{ form_label(form.name) }}
+                            {{ form_widget(form.name,  {'attr': {'class': 'form-control', 'placeholder': 'Nombre producto'}}) }}
+                        </div>
+                        <div class="col-sm-3">
+                            {{ form_label(form.price) }}
+                            {{ form_widget(form.price,  {'attr': {'class': 'form-control', 'placeholder': 'Precio'}}) }}
+                        </div>
+                        <div class="col-sm-3">
+                            {{ form_label(form.priceDivider) }}
+                            {{ form_widget(form.priceDivider,  {'attr': {'class': 'form-control', 'placeholder': 'Divisor de precio (1000 equivale a 1kg, 20 a 20g)'}}) }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-6 mb-3 mb-sm-0">
+                            {{ form_label(form.description) }}
+                            {{ form_widget(form.description,  {'attr': {'class': 'form-control', 'placeholder': 'Descripcion'}}) }}
+                        </div>
+                        <div class="col-sm-6 mb-3 mb-sm-0">
+                            {{ form_label(form.category) }}
+                            {{ form_widget(form.category,  {'attr': {'class': 'form-control', 'placeholder': 'Seleccione categoria'}}) }}
+                        </div>
+                        <div class="col-sm-6">
+                            <img src="/uploads/products/{{ form.vars.data.mainImageFilename }}" style="max-height:250px">
+                            {{ form_widget(form.mainImageFilename,  {'attr': {'class': 'form-control', 'placeholder': 'Imagen principal'}}) }}
+                            <small id="emailHelp" class="form-text text-muted">Imagen primaria</small>
+                        </div>
+                        <div class="col-sm-6">
+                            <img src="/uploads/products/{{ form.vars.data.secondaryImageFilename }}" style="max-height:250px">
+                            {{ form_widget(form.secondaryImageFilename,  {'attr': {'class': 'form-control', 'placeholder': 'Imagen secundaria'}}) }}
+                            <small id="emailHelp" class="form-text text-muted">Imagen secundaria</small>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-6">
+                            {{ form_label(form.divisible) }}
+                            {{ form_widget(form.divisible,  {'attr': {'class': 'form-control', 'placeholder': 'Es Divisible?'}}) }}
+                            <small id="emailHelp" class="form-text text-muted">Marcar si el product es divisible</small>
+                        </div>
+                        <div class="col-sm-6 mb-3 mb-sm-0">
+                            {{ form_label(form.type) }}
+                            {{ form_widget(form.type,  {'attr': {'class': 'form-control', 'placeholder': 'Tipo'}}) }}
+                        </div>
+
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-6">
+                            {{ form_label(form.divisibleBy) }}
+                            {{ form_widget(form.divisibleBy,  {'attr': {'class': 'form-control', 'placeholder': 'Divisible por'}}) }}
+                            <small id="emailHelp" class="form-text text-muted">En caso de fraccionar el producto en 100, 200 y 500. Colocar <strong>100, 200, 500</strong></small>
+                        </div>
+                        <div class="col-sm-6 mb-3 mb-sm-0">
+                            {{ form_label(form.envases) }}
+                            {{ form_widget(form.envases,  {'attr': {'class': 'form-control', 'placeholder': 'Seleccione envase'}}) }}
+                        </div>
+                    </div>
+                {{ form_widget(form.save, {'attr': {'class':'btn btn-primary'}}) }}
+                {{ form_end(form) }}
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

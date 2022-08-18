@@ -1,0 +1,145 @@
+{% extends "base_front.html.twig" %}
+    {% block stylesheets %}
+        {{ parent() }}
+        {{ encore_entry_link_tags('checkout_style') }}
+    {% endblock %}
+{% block body %}
+    <header class="masthead">
+        <div class="container">
+        </div>
+    </header>
+    <!-- Portfolio Grid-->
+    <section class="page-section bg-light" id="portfolio">
+        <div class="text-center">
+            <h2 class="section-heading text-uppercase">Tu Carrito</h2>
+        </div>
+        <div class="container">
+            <table>
+                <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Producto</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Borrar</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for key, product in cartProducts %}
+                    {% if key != 'total' %}
+                        <tr>
+                            <th scope="row">
+                                <img src="{{ product['img'] }}" class="img-fluid img-thumbnail" alt="">
+                            </th>
+                            <td>{{ product.name}} </td>
+                            <td>$ {{ product.price }} / {{ product.typeForFront }}</td>
+                            <td>
+                                {% if product.isDivisible %}
+                                    <div class="row">
+                                        <div class="col-8">
+                                            {{ loadProductDivisible(product.divisibleBy, product.type, product.price, product.priceDivider, product.size) }}
+                                        </div>
+                                        <div class="col-4">
+                                            <a href="#" class="btn b btn-outline-dark btn-sm jsEditProductFromCart mb-1 mt-1" data-id="{{ product.id }}" data-divisible="true">
+                                                Guardar
+                                            </a>
+                                        </div>
+
+                                    </div>
+                                {% else %}
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <input style="width: 100%;" data-envase="{{ 'envase' in product.img }}" class="jsEditProductFromCartInput_{{ product.id }}" type="number" min="0" value="{{ product.size }}" >
+                                        </div>
+                                        <div class="col-4">
+                                            <a href="#" class="btn b btn-outline-dark btn-sm jsEditProductFromCart mb-1" data-id="{{ product.id }}" data-divisible="false">
+                                                Guardar
+                                            </a>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </td>
+                            <td>$ {{ product.priceSize }}</td>
+                            <td>
+                                <a href="#" class="btn btn-danger btn-sm jsRemoveProductFromCart" data-id="{{ product.id }}" data-envase="{{ 'envase' in product.img }}">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="container">
+            <div>
+                {{ form_start(form) }}
+                <div class="row mt-3">
+                    <h4>Detalles de facturación</h4>
+                    <div class="col-md-6 col-sm-12">
+                        <label for="inputEmail4">Nombre y Apellido</label>
+                       {{ form_widget(form.name, {'attr': {'class': 'form-control', 'placeholder': 'Nombre y Apellido'}}) }}
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <label for="inputEmail4">Email</label>
+                        {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'Email'}}) }}
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <h4>Datos de Envases</h4>
+                    <div class="col-md-6 col-sm-12">
+                        <label for="inputEmail4">¿Debemos levantar envases?</label>
+                        {{ form_widget(form.pickupRefillments, {'attr': {'class': 'form-control', 'placeholder': '¿Debemos levantar envases?'}}) }}
+                    </div>
+                    <div class="col-md-6 col-sm-12 d-none pickupData">
+                        <label for="inputEmail4">Zona de retiro</label>
+                        {{ form_widget(form.pickupZone, {'attr': {'class': 'form-control', 'placeholder': 'Zona de retiro'}}) }}
+                        <div class="alert alert-light" role="alert">Levantamos envases solo en estas zonas de retiro</div>
+                    </div>
+                    <div class="col-md-6 col-sm-12 d-none pickupData">
+                        <label for="inputEmail4">Dirección</label>
+                        {{ form_widget(form.pickupAddress, {'attr': {'class': 'form-control', 'placeholder': 'Dirección'}}) }}
+                    </div>
+                    <div class="col-md-6 col-sm-12 d-none pickupData">
+                        <label for="inputEmail4">Ciudad</label>
+                        {{ form_widget(form.pickupCity, {'attr': {'class': 'form-control', 'placeholder': 'Ciudad'}}) }}
+                    </div>
+                    <div class="col-md-6 col-sm-12 d-none pickupData">
+                        <label for="inputEmail4">Teléfono</label>
+                        {{ form_widget(form.pickupPhone, {'attr': {'class': 'form-control', 'placeholder': 'Teléfono'}}) }}
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <h4>Datos de Entrega</h4>
+                    <div class="col-md-6 col-sm-12">
+                        <label for="inputEmail4">Zona de entrega</label>
+                        {{ form_widget(form.deliveryZone, {'attr': {'class': 'form-control', 'placeholder': 'Zona de retiro'}}) }}
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <label for="inputEmail4">Dirección</label>
+                        {{ form_widget(form.deliveryAddress, {'attr': {'class': 'form-control', 'placeholder': 'Dirección de entrega'}}) }}
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <label for="inputEmail4">Ciudad</label>
+                        {{ form_widget(form.deliveryCity, {'attr': {'class': 'form-control', 'placeholder': 'Ciudad'}}) }}
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <label for="inputEmail4">Teléfono</label>
+                        {{ form_widget(form.deliveryPhone, {'attr': {'class': 'form-control', 'placeholder': 'Teléfono de entrega'}}) }}
+                        <div class="alert alert-light" role="alert">En caso de tener que comunicarnos con alguien por problemas de entrega</div>
+                    </div>
+                </div>
+                {{ form_end(form) }}
+            </div>
+            <div class="d-flex justify-content-end">
+                <h5>Total: <span class="price text-success" id="cartTotal">$ {{ cartProducts.total }}</span></h5>
+            </div>
+        </div>
+    </section>
+    <!-- Contact-->
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('checkout') }}
+{% endblock %}

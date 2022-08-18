@@ -1,0 +1,43 @@
+version: '2.2'
+
+services:
+    remarket_web:
+        build: ./web
+        container_name: remarket-web
+        image: remarket-web
+        ports:
+            - 80:80
+        volumes:
+            - ${APP_DIR}:/home/app
+        networks:
+            main:
+                aliases:
+                    - remarket_web_core
+                    - local.remarket.com
+    remarket_php:
+        build: ./php
+        container_name: remarket-php
+        image: remarket-php
+        volumes:
+            - ${APP_DIR}:/home/app:cached
+        networks:
+            main:
+                aliases:
+                    - remarket_php
+    remarket_dbserver:
+        container_name: remarket-dbserver
+        image: remarket-dbserver
+        build: ./dbserver
+        ports:
+         - "${DB_PORT}:3306"
+        volumes:
+            - ${APP_DB}:/var/lib/mysql
+        environment:
+            MYSQL_ALLOW_EMPTY_PASSWORD: 1
+        networks:
+            main:
+                aliases:
+                    - remarket_dbserver
+
+networks:
+    main:

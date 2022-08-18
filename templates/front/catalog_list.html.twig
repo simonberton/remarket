@@ -1,0 +1,41 @@
+{% extends "base_front.html.twig" %}
+
+{% block body %}
+
+
+    <header class="masthead">
+        <div class="container">
+        </div>
+    </header>
+    <!-- Portfolio Grid-->
+    <section class="page-section bg-light" id="portfolio">
+        <div class="text-center">
+            <h2 class="section-heading text-uppercase">Productos</h2>
+        </div>
+        <div class="container">
+
+            <div class="row">
+                {% for category in categories %}
+                    <div class="col-lg-3 col-sm-4 mb-4">
+                        <!-- Portfolio item 1-->
+                        <div class="portfolio-item">
+                            <a class="portfolio-link" href="{{ path('category_home', {'categorySlug': category.slug}) }}">
+                                <div class="portfolio-hover">
+                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                                </div>
+                                <img class="img-fluid" src="/uploads/products/{{ category.mainImageFilename }}" style="min-height: 300px;">
+                            </a>
+                            <div class="portfolio-caption">
+                                <div class="portfolio-caption-heading">{{ category.name }}</div>
+                                <div class="portfolio-caption-subheading text-muted">{{ category.description }}</div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Contact-->
+{% endblock %}

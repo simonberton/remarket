@@ -1,0 +1,45 @@
+{% extends "base_admin.html.twig" %}
+
+{% block content %}
+    <div class="container-fluid">
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">{{ action }} post</h6>
+            </div>
+
+            <div class="card-body">
+                {{ form_start(form) }}
+                    <div class="form-group row">
+                        <div class="col-sm-12 mb-3 mb-sm-2">
+                            {{ form_label(form.title) }}
+                            {{ form_widget(form.title,  {'attr': {'class': 'form-control', 'placeholder': 'Titulo'}}) }}
+                        </div>
+                        <div class="col-sm-12 mb-3 mb-sm-2">
+                            {{ form_label(form.shortDescription) }}
+                            {{ form_widget(form.shortDescription,  {'attr': {'class': 'form-control', 'placeholder': 'Texto'}}) }}
+                        </div>
+                        <div class="col-sm-12 mb-3 mb-sm-2">
+                            {{ form_label(form.description) }}
+                            {{ form_widget(form.description,  {'attr': {'class': 'form-control tinymce', 'placeholder': 'Texto'}}) }}
+                        </div>
+                        <div class="col-sm-12 mb-3 mb-sm-2">
+                            {{ form_label(form.category) }}
+                            {{ form_widget(form.category,  {'attr': {'class': 'form-control', 'placeholder': 'Categoria'}}) }}
+                        </div>
+                        <div class="col-sm-12">
+                            <img src="/uploads/products/{{ form.vars.data.image }}" style="max-height:250px">
+                            {{ form_widget(form.image,  {'attr': {'class': 'form-control', 'placeholder': 'Imagen principal'}}) }}
+                            <small id="emailHelp" class="form-text text-muted">Las imagenes deben ser de <strong>600 por 450 px<strong></small>
+                        </div>
+                    </div>
+                {{ form_widget(form.save, {'attr': {'class':'btn btn-primary'}}) }}
+                {{ form_end(form) }}
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

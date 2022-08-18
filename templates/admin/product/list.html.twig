@@ -1,0 +1,36 @@
+{% extends "base_admin.html.twig" %}
+
+{% block content %}
+    <div class="container-fluid">
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Productos</h6>
+            </div>
+
+            <div class="card-body">
+                <a href="{{ path('admin_product_load') }}">Cargar/Editar por CSV</a>
+                <div class="table-responsive">
+                    <div id="table"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="jsColumns" data-columns="Nombre, Tipo, Precio, Divisible?, Divisible por, Cantidad divisibles"></div>
+    <div class="jsColumnsData" data-data="[
+        {% for product in products %}
+            [
+                '{{ product.id }}',
+                '{{ product.name }}',
+                '{{ product.type }}',
+                '{{ product.divisible == true ? 'Si': 'No' }}',
+                '{{ product.price }}',
+                '{{ product.divisibleBy }}'
+             ],
+        {% endfor %}
+    ]"></div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('table-product') }}
+{% endblock %}

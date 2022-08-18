@@ -1,0 +1,29 @@
+{% extends "base_admin.html.twig" %}
+
+{% block content %}
+    <div class="container-fluid">
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Productos</h6>
+            </div>
+
+            <div class="card-body">
+                <div class="table-responsive">
+                    <form method="post" enctype="multipart/form-data">
+                        <h5>Cargar o editar productos por csv</h5>
+                        <input type="file" name="file">
+                        <input type="submit" value="Guardar">
+                    </form>
+                    <br>
+                    <a href="#">Ejemplo CSV</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

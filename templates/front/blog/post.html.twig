@@ -1,0 +1,20 @@
+{% extends "base_front.html.twig" %}
+
+{% block body %}
+<!-- About-->
+<header class="masthead-blog">
+    <div class="container">
+
+    </div>
+</header>
+<section class="page-section">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-heading text-uppercase">{{ post.title }}</h2>
+        </div>
+        {{ post.description|raw }}
+        <img src="/uploads/products/{{ post.image }}" style="max-height:400px">
+    </div>
+</section>
+
+{% endblock %}

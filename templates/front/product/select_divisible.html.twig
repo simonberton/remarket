@@ -1,0 +1,5 @@
+<select class="form-select jsSize">
+    {% for option in options %}
+        <option {{ option == size ? 'selected' : '' }} value="{{ option }}">{{ option }} {{ type }} - $ {{ ((option * price) / priceDivider)|round }}</option>
+    {% endfor %}
+</select>

@@ -1,0 +1,33 @@
+{% extends "base_admin.html.twig" %}
+
+{% block content %}
+    <div class="container-fluid">
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Envases</h6>
+            </div>
+
+            <div class="card-body">
+                <div class="table-responsive">
+                    <div id="table"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="jsColumns" data-columns="'Id', 'Nombre'"></div>
+    <div class="jsColumnsData" data-data="[
+        {% for envase in envases %}
+            [
+                '{{ envase.id }}',
+                '{{ envase.name }}',
+                '{{ envase.price }}',
+                '{{ envase.quantity }}',
+             ],
+        {% endfor %}
+    ]"></div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('table-envase') }}
+{% endblock %}

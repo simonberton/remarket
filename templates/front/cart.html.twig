@@ -1,0 +1,81 @@
+<!-- Modal -->
+<div class="modal fade" id="cartModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Tu carrito
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body table-responsive">
+                <table class="table table-fit">
+                    <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Producto</th>
+                        <th scope="col">Precio</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">Total</th>
+                        <th scope="col">Borrar</th>
+                    </tr>
+                    </thead>
+                    <tbody id="cartBody">
+                        {% for key, product in cartProducts %}
+                            {% if key != 'total' %}
+                            <tr>
+                                <th scope="row" style="width: 10%">
+                                    <img src="{{ product['img'] }}" class="img-fluid img-thumbnail" alt="">
+                                </th>
+                                <td>{{ product.name}} </td>
+                                <td>$ {{ product.price }} / {{ product.typeForFront }}</td>
+                                <td style="min-width: 250px;">
+                                    {% if product.isDivisible %}
+                                        <div class="row">
+                                            <div class="col-8">
+                                                {{ loadProductDivisible(product.divisibleBy, product.type, product.price, product.priceDivider, product.size) }}
+                                            </div>
+                                            <div class="col-4">
+                                                <a href="#" class="btn b btn-outline-dark btn-sm jsEditProductFromCart mb-1 mt-1" data-id="{{ product.id }}" data-divisible="true">
+                                                    Guardar
+                                                </a>
+                                            </div>
+
+                                        </div>
+                                    {% else %}
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <input style="max-width: 150px;" data-envase="{{ 'envase' in product.img }}" class="jsEditProductFromCartInput_{{ product.id }}" type="number" min="0" value="{{ product.size }}" >
+                                        </div>
+                                        <div class="col-4">
+                                            <a href="#" class="btn b btn-outline-dark btn-sm jsEditProductFromCart mb-1" data-id="{{ product.id }}" data-divisible="false">
+                                               Guardar
+                                            </a>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                </td>
+                                <td style="min-width: 65px;">$ {{ product.priceSize }}</td>
+                                <td>
+                                    <a href="#" class="btn btn-danger btn-sm jsRemoveProductFromCart" data-id="{{ product.id }}" data-envase="{{ 'envase' in product.img }}">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <div class="d-flex justify-content-end">
+                    <h5>Total: <span class="price text-success" id="cartTotal">$ {{ cartProducts.total }}</span></h5>
+                </div>
+            </div>
+            <div class="modal-footer border-top-0 d-flex justify-content-between">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <a type="button" class="btn btn-success" href="{{ path('checkout') }}">Checkout</a>
+            </div>
+        </div>
+    </div>
+</div>
